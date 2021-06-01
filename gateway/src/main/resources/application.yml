@@ -7,7 +7,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 139.198.176.250:8848
+        server-addr: 127.0.0.1:8848
     gateway:
       discovery:
         locator:
@@ -26,3 +26,22 @@ spring:
             - Path=/consumer/**
           filters:
             - StripPrefix=1
+    sentinel:
+      transport:
+        port: 15000
+        dashboard: 127.0.0.1:8848
+
+  main:
+    allow-bean-definition-overriding: true
+
+  zipkin:
+    base-url: http://localhost:9411/
+    service:
+      name: consumer
+    sender:
+      type: web
+
+    #设置采样率默认为 0.1 注意之前的版本是percentage 新版本中更换为 probability
+    sleuth:
+      sampler:
+        probability: 1

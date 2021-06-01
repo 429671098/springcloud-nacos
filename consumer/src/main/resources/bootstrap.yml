@@ -8,7 +8,27 @@ spring:
   cloud:
     nacos:
       discovery: # nacos-discovery 服务注册发现
-        server-addr: 139.198.176.250:8848
+        server-addr: 127.0.0.1:8848
       config: # nacos-config 配置中心 （拉取配置中心需要改成bootstrap配置文件，优先加载）
-        server-addr: 139.198.176.250:8848
+        server-addr: 127.0.0.1:8848
         file-extension: yaml # 配置文件格式
+    sentinel:
+      transport:
+        port: 18763
+        dashboard: 127.0.0.1:8748
+
+    feign:
+      sentinel:
+        enabled: true
+
+  zipkin:
+    base-url: http://localhost:9411/
+    service:
+      name: consumer
+    sender:
+      type: web
+
+    #设置采样率默认为 0.1 注意之前的版本是percentage 新版本中更换为 probability
+    sleuth:
+      sampler:
+        probability: 1
